@@ -44,8 +44,20 @@ async function removeNote(id) {
   console.log(newNotes);
 }
 
+async function editNote(id, title) {
+  const notes = await getNotes();
+
+  console.log("id", id);
+  console.log("title", title);
+
+  // await fs.writeFile(notesPath, JSON.stringify(notes));
+  console.log(chalk.red.inverse("Note was edit!"));
+  // console.log(newNotes);
+}
+
 module.exports = {
   addNote,
-  printNotes,
+  getNotes,
   removeNote,
+  editNote,
 };
