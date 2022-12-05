@@ -3,7 +3,6 @@ const path = require("path");
 const chalk = require("chalk");
 
 const notesPath = path.join(__dirname, "db.json");
-// console.log(notesPath);
 
 async function addNote(title) {
   const notes = await getNotes();
@@ -34,25 +33,24 @@ async function printNotes() {
 
 async function removeNote(id) {
   const notes = await getNotes();
-
   const newNotes = notes.filter((note) => {
     return note.id !== `${id}`;
   });
 
   await fs.writeFile(notesPath, JSON.stringify(newNotes));
   console.log(chalk.red.inverse("Note was removed!"));
-  console.log(newNotes);
 }
 
 async function editNote(id, title) {
   const notes = await getNotes();
+  const index = notes.findIndex((name) => {
+    return name.id === id;
+  });
 
-  console.log("id", id);
-  console.log("title", title);
+  notes[index].title = title;
 
-  // await fs.writeFile(notesPath, JSON.stringify(notes));
-  console.log(chalk.red.inverse("Note was edit!"));
-  // console.log(newNotes);
+  await fs.writeFile(notesPath, JSON.stringify(notes));
+  console.log(chalk.blue.inverse("Note was edit!"));
 }
 
 module.exports = {
